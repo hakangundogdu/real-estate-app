@@ -1,6 +1,10 @@
 import { Stack, Flex, Button, Text, Spacer, Input } from '@chakra-ui/react';
 
+import { fetchListings } from '../utils/api';
+
 export default function Hero() {
+  fetchListings();
+
   return (
     <Flex
       w={'full'}
@@ -36,7 +40,6 @@ export default function Hero() {
             bg="white"
             placeholder="e.g 'London'"
             focusBorderColor="green.400"
-            focusBackgroundColor="white"
             width="300px"
             size="md"
             variant="outline"
