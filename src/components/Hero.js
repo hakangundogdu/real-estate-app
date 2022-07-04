@@ -1,9 +1,29 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
 import { Stack, Flex, Button, Text, Spacer, Input } from '@chakra-ui/react';
 
-import { fetchListings } from '../utils/api';
+import { fetchListingData } from '../store/listing-slice';
 
 export default function Hero() {
-  fetchListings();
+  const [location, setLocation] = useState('');
+  const dispatch = useDispatch();
+
+  const locationChangeHandler = (event) => {
+    setLocation(event.target.value);
+  };
+
+  const searchRentHandler = (e) => {
+    e.preventDefault();
+    console.log(location);
+    dispatch(fetchListingData({ area: location, listing_status: 'rent' }));
+  };
+
+  const searchSaleHandler = (e) => {
+    e.preventDefault();
+    console.log(location);
+    dispatch(fetchListingData({ area: location, listing_status: 'sale' }));
+  };
 
   return (
     <Flex
@@ -44,11 +64,23 @@ export default function Hero() {
             size="md"
             variant="outline"
             color="gray.800"
+            isRequired={true}
+            value={location}
+            onChange={locationChangeHandler}
+            type="text"
           />
-          <Button colorScheme="green" variant="solid">
+          <Button
+            onClick={searchSaleHandler}
+            colorScheme="green"
+            variant="solid"
+          >
             <a href="/">For Sale</a>
           </Button>
-          <Button colorScheme="green" variant="solid">
+          <Button
+            onClick={searchRentHandler}
+            colorScheme="green"
+            variant="solid"
+          >
             <a href="/">For Rent</a>
           </Button>
         </Stack>

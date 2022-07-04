@@ -7,7 +7,7 @@ export const fetchListings = async () => {
     method: 'GET',
     url: 'https://zoopla.p.rapidapi.com/properties/list',
     params: {
-      area: 'London',
+      area: 'Reading',
       category: 'residential',
       order_by: 'age',
       ordering: 'descending',

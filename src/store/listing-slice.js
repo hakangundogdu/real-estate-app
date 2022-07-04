@@ -1,83 +1,57 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const API_KEY = process.env.REACT_APP_ZOOPLA_API_KEY;
+
 const listingSlice = createSlice({
   name: 'listing',
   initialState: {
-    items: [],
+    properties: [],
   },
   reducers: {
     setList(state, action) {
-      state.items = action.payload.items;
-    },
-    addItemToCart(state, action) {
-      const newItem = action.payload;
-      const existingItem = state.items.find((item) => item.id === newItem.id);
-      state.totalQuantity++;
-      state.changed = true;
-      if (!existingItem) {
-        state.items.push({
-          id: newItem.id,
-          price: newItem.price,
-          quantity: 1,
-          totalPrice: newItem.price,
-          name: newItem.title,
-        });
-      } else {
-        existingItem.quantity++;
-        existingItem.totalPrice = existingItem.totalPrice + newItem.price;
-      }
-    },
-    removeItemFromCart(state, action) {
-      const id = action.payload;
-      const existingItem = state.items.find((item) => item.id === id);
-      state.totalQuantity--;
-      state.changed = true;
-      if (existingItem.quantity === 1) {
-        state.items = state.items.filter((item) => item.id !== id);
-      } else {
-        existingItem.quantity--;
-        existingItem.totalPrice = existingItem.totalPrice - existingItem.price;
-      }
+      state.properties = action.payload.properties;
     },
   },
 });
 
-// export const fetchCartData = () => {
-//   return async (dispatch) => {
-//     const fetchData = async () => {
-//       const response = await fetch(
-//         'https://redux-cart-37604-default-rtdb.firebaseio.com/cart.json'
-//       );
+export const fetchListingData = ({ area, listing_status }) => {
+  const params = {
+    area: area,
+    category: 'residential',
+    order_by: 'age',
+    ordering: 'descending',
+    page_number: '1',
+    page_size: '20',
+    listing_status: listing_status,
+  };
 
-//       if (!response.ok) {
-//         throw new Error('Could not fetch cart data!');
-//       }
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = await axios({
+        method: 'GET',
+        url: 'https://zoopla.p.rapidapi.com/properties/list',
+        params,
+        headers: {
+          'x-rapidapi-host': 'zoopla.p.rapidapi.com',
+          'x-rapidapi-key': API_KEY,
+        },
+      });
 
-//       const data = await response.json();
+      const { data } = response;
+      console.log(data.listing);
 
-//       return data;
-//     };
+      return data;
+    };
 
-//     try {
-//       const cartData = await fetchData();
-//       dispatch(
-//         cartActions.replaceCart({
-//           items: cartData.items || [],
-//           totalQuantity: cartData.totalQuantity,
-//         })
-//       );
-//     } catch (error) {
-//       dispatch(
-//         uiActions.showNotification({
-//           status: 'error',
-//           title: 'Error!',
-//           message: 'Fetching cart data failed!',
-//         })
-//       );
-//     }
-//   };
-// };
+    const listData = await fetchData();
+    dispatch(
+      listingActions.setList({
+        properties: listData.listing || [],
+      })
+    );
+  };
+};
 
 export const listingActions = listingSlice.actions;
 
