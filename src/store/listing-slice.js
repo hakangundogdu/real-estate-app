@@ -7,6 +7,7 @@ const listingSlice = createSlice({
   name: 'listing',
   initialState: {
     properties: [],
+    isLoading: false,
   },
   reducers: {
     setList(state, action) {
@@ -15,6 +16,10 @@ const listingSlice = createSlice({
         'Property List',
         JSON.stringify(state.properties)
       );
+    },
+
+    isLoading(state) {
+      state.isLoading = !state.isLoading;
     },
   },
 });
@@ -54,6 +59,7 @@ export const fetchListingData = ({ area, listing_status }) => {
         properties: listData.listing || [],
       })
     );
+    dispatch(listingActions.isLoading());
   };
 };
 

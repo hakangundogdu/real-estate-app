@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { Stack, Flex, Button, Text, Spacer, Input } from '@chakra-ui/react';
 
-import { fetchListingData } from '../store/listing-slice';
+import { fetchListingData, listingActions } from '../store/listing-slice';
 
 export default function Hero() {
   const [location, setLocation] = useState('');
@@ -16,12 +16,14 @@ export default function Hero() {
   const searchRentHandler = (e) => {
     e.preventDefault();
     console.log(location);
+    dispatch(listingActions.isLoading());
     dispatch(fetchListingData({ area: location, listing_status: 'rent' }));
   };
 
   const searchSaleHandler = (e) => {
     e.preventDefault();
     console.log(location);
+    dispatch(listingActions.isLoading());
     dispatch(
       fetchListingData({
         area: 'London',
