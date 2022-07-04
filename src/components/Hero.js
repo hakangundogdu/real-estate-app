@@ -22,7 +22,13 @@ export default function Hero() {
   const searchSaleHandler = (e) => {
     e.preventDefault();
     console.log(location);
-    dispatch(fetchListingData({ area: location, listing_status: 'sale' }));
+    dispatch(
+      fetchListingData({
+        area: 'London',
+        listing_status: 'sale',
+        listing_id: '61726950',
+      })
+    );
   };
 
   return (
@@ -81,7 +87,7 @@ export default function Hero() {
             colorScheme="green"
             variant="solid"
           >
-            <a href="/">For Rent</a>
+            <a href="/">To Rent</a>
           </Button>
         </Stack>
       </Flex>

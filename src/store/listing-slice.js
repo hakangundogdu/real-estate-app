@@ -11,6 +11,10 @@ const listingSlice = createSlice({
   reducers: {
     setList(state, action) {
       state.properties = action.payload.properties;
+      window.localStorage.setItem(
+        'Property List',
+        JSON.stringify(state.properties)
+      );
     },
   },
 });
