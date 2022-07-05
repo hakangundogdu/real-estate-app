@@ -25,7 +25,7 @@ const Property = () => {
         <a href="/">View All Listings</a>
       </Button> */}
       {isLoading && (
-        <Center w="100%">
+        <Center h="200px" w="100%">
           <CircularProgress isIndeterminate color="green.300" />
         </Center>
       )}
