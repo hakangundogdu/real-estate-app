@@ -1,11 +1,16 @@
 import React from 'react';
-import { Button, Stack, Flex, Box, Spacer } from '@chakra-ui/react';
+import { Button, Stack, Flex, Box, Spacer, Text } from '@chakra-ui/react';
 
 const NavBar = () => {
   return (
     <Flex px="0" py="4">
       <Box fontSize="2xl" paddingLeft="2" color="gray.800" fontWeight="bold">
-        <a href="/">Dream Home</a>
+        <a href="/">
+          Dream{' '}
+          <Text display="inline-block" color="green.400">
+            Home
+          </Text>{' '}
+        </a>
       </Box>
       <Spacer />
       <Stack direction="row" spacing={4}>
