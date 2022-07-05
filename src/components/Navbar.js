@@ -1,24 +1,25 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Stack, Flex, Box, Spacer, Text } from '@chakra-ui/react';
 
 const NavBar = () => {
   return (
-    <Flex px="0" py="4">
+    <Flex bg="gray.50" px="0" my="4" p="4" borderRadius="xl">
       <Box fontSize="2xl" paddingLeft="2" color="gray.800" fontWeight="bold">
-        <a href="/">
+        <Link to="/">
           Dream{' '}
           <Text display="inline-block" color="green.400">
             Home
           </Text>{' '}
-        </a>
+        </Link>
       </Box>
       <Spacer />
       <Stack direction="row" spacing={4}>
         <Button colorScheme="gray.800" variant="link">
-          <a href="/">Log in</a>
+          <Link to="/login">Log in</Link>
         </Button>
         <Button colorScheme="green" variant="solid">
-          <a href="/">Sign up</a>
+          <Link to="/signup">Sign up</Link>
         </Button>
       </Stack>
     </Flex>
