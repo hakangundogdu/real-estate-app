@@ -36,7 +36,7 @@ const PropertyBox = ({
           />
           <Image
             borderRadius="xl"
-            objectFit="cover"
+            fit="cover"
             alt="house"
             w="100%"
             h="255px"
@@ -45,13 +45,17 @@ const PropertyBox = ({
           />
         </Box>
         <Flex align="baseline" mt={2}>
-          <Badge colorScheme="blue"> FOR {listing_status}</Badge>
+          {listing_status === 'rent' ? (
+            <Badge colorScheme="blue"> TO RENT</Badge>
+          ) : (
+            <Badge colorScheme="red"> FOR SALE</Badge>
+          )}
           <Text
             ml={2}
             textTransform="uppercase"
             fontSize="sm"
             fontWeight="bold"
-            color="pink.800"
+            color="green.600"
           >
             {county}{' '}
           </Text>
@@ -59,7 +63,10 @@ const PropertyBox = ({
         <Text mt={2} fontSize="xl" fontWeight="semibold" lineHeight="short">
           {title}{' '}
         </Text>
-        <Text mt={2}>£{millify(price)}</Text>
+        <Text mt={2}>
+          £{millify(price)}
+          {listing_status === 'rent' && ' / month'}{' '}
+        </Text>
 
         <Text mt={2}>
           {displayable_address.length > 45
@@ -77,7 +84,9 @@ const PropertyBox = ({
             {num_bedrooms}
           </Text>{' '}
           <BiBath size={20} />
-          <Text fontWeight="semibold">{num_bathrooms}</Text>{' '}
+          <Text fontWeight="semibold" ml={2}>
+            {num_bathrooms}
+          </Text>{' '}
         </Flex>
       </Box>
     </Link>

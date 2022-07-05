@@ -17,6 +17,7 @@ export default function Hero() {
     e.preventDefault();
     console.log(location);
     dispatch(listingActions.isLoading());
+    dispatch(listingActions.isSearched());
     dispatch(fetchListingData({ area: location, listing_status: 'rent' }));
   };
 
@@ -24,6 +25,7 @@ export default function Hero() {
     e.preventDefault();
     console.log(location);
     dispatch(listingActions.isLoading());
+    dispatch(listingActions.isSearched());
     dispatch(
       fetchListingData({
         area: 'London',
@@ -60,7 +62,7 @@ export default function Hero() {
           Find Your Dream Home
         </Text>
         <Text fontSize="xl" fontWeight="semibold">
-          Search properties for sale and to rent
+          Search properties for sale and to rent in the UK
         </Text>
         <Spacer />
         <Stack direction="row" spacing={4}>

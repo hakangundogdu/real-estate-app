@@ -8,14 +8,18 @@ import Auth from './pages/Auth';
 import PropertyDetail from './pages/PropertyDetail';
 import NotFound from './pages/NotFound';
 
-import { fetchListingData } from './store/listing-slice';
+import {
+  fetchFeaturedListingData,
+  listingActions,
+} from './store/listing-slice';
 
 function App() {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(fetchListingData());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(listingActions.isLoading());
+    dispatch(fetchFeaturedListingData());
+  }, [dispatch]);
 
   return (
     <Routes>

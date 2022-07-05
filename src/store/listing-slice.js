@@ -8,6 +8,7 @@ const listingSlice = createSlice({
   initialState: {
     properties: [],
     isLoading: false,
+    isSearched: false,
   },
   reducers: {
     setList(state, action) {
@@ -17,9 +18,19 @@ const listingSlice = createSlice({
         JSON.stringify(state.properties)
       );
     },
+    setFeaturedList(state, action) {
+      state.featuredProperties = action.payload.properties;
+      window.localStorage.setItem(
+        'Featured Property List',
+        JSON.stringify(state.featuredProperties)
+      );
+    },
 
     isLoading(state) {
       state.isLoading = !state.isLoading;
+    },
+    isSearched(state) {
+      state.isSearched = !state.isSearched;
     },
   },
 });
@@ -31,7 +42,7 @@ export const fetchListingData = ({ area, listing_status }) => {
     order_by: 'age',
     ordering: 'descending',
     page_number: '1',
-    page_size: '20',
+    page_size: '21',
     listing_status: listing_status,
   };
 
@@ -50,6 +61,43 @@ export const fetchListingData = ({ area, listing_status }) => {
       const { data } = response;
       console.log(data.listing);
 
+      return data;
+    };
+
+    const listData = await fetchData();
+    dispatch(
+      listingActions.setList({
+        properties: listData.listing || [],
+      })
+    );
+    dispatch(listingActions.isLoading());
+  };
+};
+
+export const fetchFeaturedListingData = () => {
+  const params = {
+    area: 'London',
+    category: 'residential',
+    order_by: 'age',
+    ordering: 'descending',
+    page_number: '1',
+    page_size: '3',
+  };
+
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = await axios({
+        method: 'GET',
+        url: 'https://zoopla.p.rapidapi.com/properties/list',
+        params,
+        headers: {
+          'x-rapidapi-host': 'zoopla.p.rapidapi.com',
+          'x-rapidapi-key': API_KEY,
+        },
+      });
+
+      const { data } = response;
+      console.log(data.listing);
       return data;
     };
 
