@@ -5,12 +5,12 @@ import { Box } from '@chakra-ui/react';
 
 const Layout = ({ children }) => {
   return (
-    <Box maxWidth="1280px" m="auto">
+    <Box maxWidth="1280px" minHeight="100vh" align="space-between" m="auto">
       <header>
         <Navbar />
       </header>
       <main>{children}</main>
-      <footer>
+      <footer position="absolute">
         <Footer />
       </footer>
     </Box>
