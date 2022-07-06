@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_KEY = process.env.REACT_APP_ZOOPLA_API_KEY;
-
 const listingSlice = createSlice({
   name: 'listing',
   initialState: {
@@ -54,7 +52,7 @@ export const fetchListingData = ({ area, listing_status }) => {
         params,
         headers: {
           'x-rapidapi-host': 'zoopla.p.rapidapi.com',
-          'x-rapidapi-key': API_KEY,
+          'x-rapidapi-key': process.env.REACT_APP_ZOOPLA_API_KEY,
         },
       });
 
@@ -92,7 +90,7 @@ export const fetchFeaturedListingData = () => {
         params,
         headers: {
           'x-rapidapi-host': 'zoopla.p.rapidapi.com',
-          'x-rapidapi-key': API_KEY,
+          'x-rapidapi-key': process.env.REACT_APP_ZOOPLA_API_KEY,
         },
       });
 
