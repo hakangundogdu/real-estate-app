@@ -42,7 +42,7 @@ export default function Hero() {
       backgroundImage={'url(https://source.unsplash.com/178j8tJrNlc/1920)'}
       backgroundSize={'cover'}
       backgroundPosition={'center center'}
-      borderRadius="20"
+      borderRadius="2xl"
       justify={'center'}
       align="center"
     >
@@ -54,7 +54,7 @@ export default function Hero() {
         w="xl"
         height="200"
         p={7}
-        borderRadius="20"
+        borderRadius="2xl"
         color="white"
         opacity="1"
       >

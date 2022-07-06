@@ -36,7 +36,7 @@ export default function Signup() {
       align={'center'}
       justify={'center'}
       bg="gray.50"
-      borderRadius="xl"
+      borderRadius="2xl"
       my={6}
       p={8}
     >

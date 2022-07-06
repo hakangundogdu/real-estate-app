@@ -14,14 +14,13 @@ import {
   MenuItem,
   MenuDivider,
 } from '@chakra-ui/react';
-import { BiHeart, BiBell, BiUser } from 'react-icons/bi';
+import { BiHeart, BiBell, BiUser, BiCog, BiLogOut } from 'react-icons/bi';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../store/user-slice';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase-config';
 
 const NavBar = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   console.log('Navbar', user);
@@ -38,7 +37,7 @@ const NavBar = () => {
   };
 
   return (
-    <Flex bg="gray.50" px="0" my="4" p="4" borderRadius="xl">
+    <Flex bg="gray.50" px="0" my="4" p="4" borderRadius="2xl">
       <Box fontSize="2xl" paddingLeft="2" color="gray.800" fontWeight="bold">
         <Link to="/">
           Dream{' '}
@@ -51,15 +50,12 @@ const NavBar = () => {
 
       {user ? (
         <Stack direction="row" spacing={4} align="center">
-          <Button onClick={logoutHandler} colorScheme="gray.800" variant="link">
-            Log out
-          </Button>
           <IconButton
             bg="gray.200"
             _hover={{ bg: 'gray.300' }}
             aria-label="Notification"
             icon={<BiBell />}
-            borderRadius="full"
+            borderRadius="2xl"
           />
           <Link to="/saved">
             <IconButton
@@ -67,7 +63,7 @@ const NavBar = () => {
               _hover={{ bg: 'gray.300' }}
               aria-label="Like"
               icon={<BiHeart />}
-              borderRadius="full"
+              borderRadius="2xl"
             />
           </Link>
 
@@ -78,17 +74,19 @@ const NavBar = () => {
                 _hover={{ bg: 'gray.300' }}
                 aria-label="Like"
                 icon={<BiUser />}
-                borderRadius="full"
+                borderRadius="2xl"
               />{' '}
             </MenuButton>
             <MenuList>
-              <MenuItem>My Account</MenuItem>
-              <MenuItem>
+              <MenuItem icon={<BiUser size="16px" />}>My Account</MenuItem>
+              <MenuItem icon={<BiHeart size="16px" />}>
                 <Link to="/saved">My Saved List</Link>
               </MenuItem>
-              <MenuItem>Settings</MenuItem>
+              <MenuItem icon={<BiCog size="16px" />}>Settings</MenuItem>
               <MenuDivider />
-              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+              <MenuItem icon={<BiLogOut size="16px" />} onClick={logoutHandler}>
+                Logout
+              </MenuItem>
             </MenuList>
           </Menu>
         </Stack>
