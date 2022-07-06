@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from '../assets/icon.png';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Button,
@@ -12,7 +13,9 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Image,
   MenuDivider,
+  HStack,
 } from '@chakra-ui/react';
 import {
   BiHeart,
@@ -51,11 +54,22 @@ const NavBar = () => {
         color="gray.800"
         fontWeight="bold"
       >
-        <Link to="/">
-          Dream{' '}
-          <Text display="inline-block" color="green.400">
-            Home
-          </Text>{' '}
+        <Link verticalAlign="middle" to="/">
+          <Flex justify="center" align="center">
+            <Image
+              src={Icon}
+              alt="logo"
+              display="inline-block"
+              w="auto"
+              h="24px"
+              mr="2"
+              py="auto"
+            />
+            <Text color="gray.800"> Dream</Text>{' '}
+            <Text ml="1" color="green.400">
+              Home
+            </Text>{' '}
+          </Flex>
         </Link>
       </Box>
       <Spacer />
