@@ -5,6 +5,7 @@ import './App.css';
 import Home from './pages/Home';
 import Properties from './pages/Properties';
 import LoginPage from './pages/LoginPage';
+import SavedPage from './pages/SavedPage';
 import SignupPage from './pages/SignupPage';
 import PropertyDetail from './pages/PropertyDetail';
 import NotFound from './pages/NotFound';
@@ -45,6 +46,7 @@ function App() {
       <Route path="/properties/:listing_id" element={<PropertyDetail />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/saved" element={<SavedPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
