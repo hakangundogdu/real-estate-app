@@ -1,3 +1,9 @@
+import { signInWithEmailAndPassword } from 'firebase/auth';
+
+import { auth } from '../firebase-config';
+import { useDispatch } from 'react-redux';
+import { login } from '../store/user-slice';
+
 import {
   Flex,
   Box,
@@ -10,21 +16,24 @@ import {
   Button,
   Heading,
   Text,
-  useColorModeValue,
   IconButton,
+  FormErrorMessage,
 } from '@chakra-ui/react';
+import { Formik, Field } from 'formik';
+import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { BiHide, BiShow } from 'react-icons/bi';
 
 export default function Login() {
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <Flex
       align={'center'}
       justify={'center'}
-      bg={useColorModeValue('gray.50', 'gray.800')}
+      bg="gray.50"
       borderRadius="xl"
       my={6}
       p={8}
@@ -38,13 +47,110 @@ export default function Login() {
             to save properties and enjoy all of our cool features ✌️
           </Text>
         </Stack>
-        <Box
-          rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
-          boxShadow={'lg'}
-          p={8}
-        >
-          <Stack spacing={4}>
+        <Box rounded={'lg'} bg="white" boxShadow={'lg'} p={8}>
+          <Formik
+            initialValues={{
+              email: '',
+              password: '',
+            }}
+            validationSchema={Yup.object({
+              email: Yup.string()
+                .email('invalid email')
+                .required('Email required'),
+              password: Yup.string()
+                .required('Password required')
+                .min(6, 'Password is too short, 6 characters minimum'),
+            })}
+            onSubmit={(values, actions) => {
+              signInWithEmailAndPassword(auth, values.email, values.password)
+                .then(() => {
+                  // Signed in
+
+                  dispatch(
+                    login({
+                      user: auth.currentUser.email,
+                    })
+                  );
+                  actions.resetForm();
+                  // ...
+                })
+                .catch((error) => {
+                  const errorCode = error.code;
+                  const errorMessage = error.message;
+                  console.log(errorCode, errorMessage);
+                  // ..
+                });
+            }}
+          >
+            {({ handleSubmit, errors, touched }) => (
+              <form onSubmit={handleSubmit}>
+                <Stack spacing={4}>
+                  <FormControl
+                    id="email"
+                    isRequired
+                    isInvalid={!!errors.email && touched.email}
+                  >
+                    <FormLabel htmlFor="email">Email Address</FormLabel>
+                    <Field as={Input} id="email" name="email" type="email" />
+                    <FormErrorMessage>{errors.email}</FormErrorMessage>
+                  </FormControl>
+
+                  <FormControl
+                    id="password"
+                    isRequired
+                    isInvalid={!!errors.password && touched.password}
+                  >
+                    <FormLabel htmlFor="password">Password</FormLabel>
+
+                    <InputGroup>
+                      <Field
+                        as={Input}
+                        id="password"
+                        name="password"
+                        type={showPassword ? 'text' : 'password'}
+                      />
+                      <InputRightElement h={'full'}>
+                        <IconButton
+                          variant={'ghost'}
+                          onClick={() =>
+                            setShowPassword((showPassword) => !showPassword)
+                          }
+                          icon={showPassword ? <BiShow /> : <BiHide />}
+                        />
+                      </InputRightElement>
+                    </InputGroup>
+                    <FormErrorMessage>{errors.password}</FormErrorMessage>
+                  </FormControl>
+                  <Stack spacing={10} pt={2}>
+                    <Button
+                      type="submit"
+                      loadingText="Submitting"
+                      size="lg"
+                      colorScheme="green"
+                    >
+                      Login
+                    </Button>
+                  </Stack>
+                  <Stack pt={6}>
+                    <Text align={'center'}>
+                      No account yet?{' '}
+                      <Button colorScheme="green" variant="link">
+                        <Link to="/login">Sign up</Link>
+                      </Button>
+                    </Text>
+                  </Stack>
+                </Stack>
+              </form>
+            )}
+          </Formik>
+        </Box>
+      </Stack>
+    </Flex>
+  );
+}
+
+{
+  /* <Stack spacing={4}>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
               <Input type="email" />
@@ -77,9 +183,5 @@ export default function Login() {
                 </Button>
               </Text>
             </Stack>
-          </Stack>
-        </Box>
-      </Stack>
-    </Flex>
-  );
+          </Stack> */
 }

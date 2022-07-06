@@ -1,14 +1,8 @@
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-  updateProfile,
-} from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 import { auth } from '../firebase-config';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../store/user-slice';
+import { login } from '../store/user-slice';
 
 import {
   Flex,
@@ -77,19 +71,14 @@ export default function Signup() {
                 values.email,
                 values.password
               )
-                .then((userCredential) => {
+                .then(() => {
                   // Signed in
-                  const user = userCredential.user;
+
                   dispatch(
-                    setUser({
-                      firstname: values.firstname,
-                      lastname: values.lastname,
-                      email: values.email,
+                    login({
+                      user: auth.currentUser.email,
                     })
                   );
-
-                  console.log(user);
-
                   actions.resetForm();
                   // ...
                 })

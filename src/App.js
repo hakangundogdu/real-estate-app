@@ -13,9 +13,25 @@ import {
   fetchFeaturedListingData,
   listingActions,
 } from './store/listing-slice';
+import { login, logout } from './store/user-slice';
+import { auth } from './firebase-config';
+import { onAuthStateChanged } from 'firebase/auth';
 
 function App() {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (userAuth) => {
+      if (userAuth) {
+        console.log('app', auth.currentUser.email);
+        dispatch(login({ user: auth.currentUser.email }));
+        // user is logged in, send the user's details to redux, store the current user in the state
+      } else {
+        dispatch(logout());
+        console.log('app', auth.currentUser);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     dispatch(listingActions.isLoading());
