@@ -30,7 +30,7 @@ const Property = () => {
         </Center>
       )}
 
-      <SimpleGrid my="4" columns={3} spacing={4}>
+      <SimpleGrid my="4" columns={{ sm: 1, md: 2, lg: 3 }} spacing={4}>
         {properties.map((property) => (
           <PropertyBox property={property} key={property.listing_id} />
         ))}

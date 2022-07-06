@@ -5,7 +5,13 @@ import { Box } from '@chakra-ui/react';
 
 const Layout = ({ children }) => {
   return (
-    <Box maxWidth="1280px" minHeight="100vh" align="space-between" m="auto">
+    <Box
+      maxWidth="1280px"
+      minHeight="100vh"
+      align="space-between"
+      px="4"
+      m="auto"
+    >
       <header>
         <Navbar />
       </header>

@@ -51,21 +51,35 @@ export default function Hero() {
         align="center"
         justifyContent="center"
         bg="gray.800"
-        w="xl"
-        height="200"
+        width={[
+          '100%', // 0-30em
+          'lg', // 30em-48em
+          'xl', // 48em-62em
+          'xl', // 62em+
+        ]}
+        height={[
+          '100%', // 0-30em
+          '40vh', // 30em-48em
+          '200', // 48em-62em
+          '200', // 62em+
+        ]}
         p={7}
         borderRadius="2xl"
         color="white"
         opacity="1"
       >
-        <Text fontSize="3xl" color="green.400" fontWeight="bold">
+        <Text
+          fontSize={['2xl', '2xl', '3xl', '3xl']}
+          color="green.400"
+          fontWeight="bold"
+        >
           Find Your Dream Home
         </Text>
-        <Text fontSize="xl" fontWeight="semibold">
+        <Text fontSize={['xs', 'md', 'xl', 'xl']} fontWeight="semibold">
           Search properties for sale and to rent in the UK
         </Text>
         <Spacer />
-        <Stack direction="row" spacing={4}>
+        <Stack direction={['column', 'row']} spacing={4}>
           <Input
             bg="white"
             placeholder="e.g 'London'"

@@ -14,7 +14,14 @@ import {
   MenuItem,
   MenuDivider,
 } from '@chakra-ui/react';
-import { BiHeart, BiBell, BiUser, BiCog, BiLogOut } from 'react-icons/bi';
+import {
+  BiHeart,
+  BiBell,
+  BiUser,
+  BiCog,
+  BiLogOut,
+  BiMenu,
+} from 'react-icons/bi';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../store/user-slice';
 import { signOut } from 'firebase/auth';
@@ -37,8 +44,13 @@ const NavBar = () => {
   };
 
   return (
-    <Flex bg="gray.50" px="0" my="4" p="4" borderRadius="2xl">
-      <Box fontSize="2xl" paddingLeft="2" color="gray.800" fontWeight="bold">
+    <Flex bg="gray.50" px="0" my="4" p="4" align="center" borderRadius="2xl">
+      <Box
+        fontSize={['xl', 'xl', '2xl', '2xl']}
+        paddingLeft="2"
+        color="gray.800"
+        fontWeight="bold"
+      >
         <Link to="/">
           Dream{' '}
           <Text display="inline-block" color="green.400">
@@ -51,6 +63,7 @@ const NavBar = () => {
       {user ? (
         <Stack direction="row" spacing={4} align="center">
           <IconButton
+            display={['none', 'flex', 'flex', 'flex']}
             bg="gray.200"
             _hover={{ bg: 'gray.300' }}
             aria-label="Notification"
@@ -59,6 +72,7 @@ const NavBar = () => {
           />
           <Link to="/saved">
             <IconButton
+              display={['none', 'flex', 'flex', 'flex']}
               bg="gray.200"
               _hover={{ bg: 'gray.300' }}
               aria-label="Like"
@@ -95,7 +109,11 @@ const NavBar = () => {
           <Button colorScheme="gray.800" variant="link">
             <Link to="/login">Log in</Link>
           </Button>
-          <Button colorScheme="green" variant="solid">
+          <Button
+            display={['none', 'flex', 'flex', 'flex']}
+            colorScheme="green"
+            variant="solid"
+          >
             <Link to="/signup">Sign up</Link>
           </Button>
         </Stack>
