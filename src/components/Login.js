@@ -21,11 +21,12 @@ import {
 } from '@chakra-ui/react';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { BiHide, BiShow } from 'react-icons/bi';
 
 export default function Login() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -65,12 +66,12 @@ export default function Login() {
               signInWithEmailAndPassword(auth, values.email, values.password)
                 .then(() => {
                   // Signed in
-
                   dispatch(
                     login({
                       user: auth.currentUser.email,
                     })
                   );
+                  navigate('/');
                   actions.resetForm();
                   // ...
                 })
