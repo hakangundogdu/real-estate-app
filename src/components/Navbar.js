@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Button,
   IconButton,
@@ -8,6 +8,11 @@ import {
   Box,
   Spacer,
   Text,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
 } from '@chakra-ui/react';
 import { BiHeart, BiBell, BiUser } from 'react-icons/bi';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,6 +21,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../firebase-config';
 
 const NavBar = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   console.log('Navbar', user);
@@ -55,23 +61,36 @@ const NavBar = () => {
             icon={<BiBell />}
             borderRadius="full"
           />
-          <IconButton
-            bg="gray.200"
-            _hover={{ bg: 'gray.300' }}
-            aria-label="Like"
-            icon={<BiHeart />}
-            borderRadius="full"
-          />
-
-          <Link to="/profile">
+          <Link to="/saved">
             <IconButton
               bg="gray.200"
               _hover={{ bg: 'gray.300' }}
               aria-label="Like"
-              icon={<BiUser />}
+              icon={<BiHeart />}
               borderRadius="full"
-            />{' '}
+            />
           </Link>
+
+          <Menu autoSelect="false" direction="ltr">
+            <MenuButton>
+              <IconButton
+                bg="gray.200"
+                _hover={{ bg: 'gray.300' }}
+                aria-label="Like"
+                icon={<BiUser />}
+                borderRadius="full"
+              />{' '}
+            </MenuButton>
+            <MenuList>
+              <MenuItem>My Account</MenuItem>
+              <MenuItem>
+                <Link to="/saved">My Saved List</Link>
+              </MenuItem>
+              <MenuItem>Settings</MenuItem>
+              <MenuDivider />
+              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+            </MenuList>
+          </Menu>
         </Stack>
       ) : (
         <Stack direction="row" spacing={4}>
