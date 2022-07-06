@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
 import Properties from './pages/Properties';
@@ -20,6 +20,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 
 function App() {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     onAuthStateChanged(auth, (userAuth) => {
@@ -46,7 +47,10 @@ function App() {
       <Route path="/properties/:listing_id" element={<PropertyDetail />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/saved" element={<SavedPage />} />
+      <Route
+        path="/saved"
+        element={user ? <SavedPage /> : <Navigate to="/login" />}
+      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
