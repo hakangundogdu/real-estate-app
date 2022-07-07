@@ -26,13 +26,7 @@ export default function Hero() {
     console.log(location);
     dispatch(listingActions.isLoading());
     dispatch(listingActions.isSearched());
-    dispatch(
-      fetchListingData({
-        area: 'London',
-        listing_status: 'sale',
-        listing_id: '61726950',
-      })
-    );
+    dispatch(fetchListingData({ area: location, listing_status: 'sale' }));
   };
 
   return (

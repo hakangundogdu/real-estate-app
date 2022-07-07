@@ -54,7 +54,7 @@ const NavBar = () => {
         color="gray.800"
         fontWeight="bold"
       >
-        <Link verticalAlign="middle" to="/">
+        <Link to="/">
           <Flex justify="center" align="center">
             <Image
               src={Icon}
