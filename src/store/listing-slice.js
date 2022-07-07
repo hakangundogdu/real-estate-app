@@ -7,6 +7,7 @@ const listingSlice = createSlice({
     properties: [],
     isLoading: false,
     isSearched: false,
+    searchLocation: null,
   },
   reducers: {
     setList(state, action) {
@@ -22,6 +23,9 @@ const listingSlice = createSlice({
         'Featured Property List',
         JSON.stringify(state.featuredProperties)
       );
+    },
+    setSearchLocation(state, action) {
+      state.searchLocation = action.payload;
     },
 
     isLoading(state) {

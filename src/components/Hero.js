@@ -11,6 +11,7 @@ export default function Hero() {
 
   const locationChangeHandler = (event) => {
     setLocation(event.target.value);
+    dispatch(listingActions.setSearchLocation(event.target.value));
   };
 
   const searchRentHandler = (e) => {
