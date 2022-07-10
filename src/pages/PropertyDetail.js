@@ -49,7 +49,7 @@ const PropertyDetail = () => {
         <Image
           objectFit="cover"
           alt="house"
-          w="auto"
+          w="full"
           h={{ base: '300px', md: '430px' }}
           src={property.image_645_430_url}
           fallbackSrc={FallbackImage}
@@ -83,7 +83,7 @@ const PropertyDetail = () => {
 
           <Flex
             alignItems="center"
-            mt={6}
+            my="2"
             justifyContent="flex-start"
             color="green.400"
           >
