@@ -24,7 +24,11 @@ const Property = () => {
       <Box my="8">
         {!isLoading && (
           <HStack align="center" justify="space-between">
-            <Text mt={2} fontSize="xl" fontWeight="semibold" lineHeight="short">
+            <Text
+              fontSize={{ base: 'lg', md: 'xl' }}
+              fontWeight="semibold"
+              lineHeight="short"
+            >
               {!isSearched && 'Featured Listings in London'}
               {isSearched &&
                 `Properties ${

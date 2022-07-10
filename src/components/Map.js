@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
-import { Box, Grid, GridItem } from '@chakra-ui/react';
+import { Box, Grid, GridItem, Show } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import PropertyBox from './PropertyBox';
 
@@ -21,9 +21,20 @@ const Map = () => {
   if (!isLoaded) return;
 
   return (
-    <Grid h="457px" my="8" w="full" templateColumns="repeat(3, 1fr)" gap={4}>
-      <GridItem colSpan={2}>
-        <Box w="full" h="457px" borderRadius="2xl" overflow="hidden">
+    <Grid
+      h={{ base: '340px', md: '457px' }}
+      my="4"
+      w="full"
+      templateColumns="repeat(3, 1fr)"
+      gap={4}
+    >
+      <GridItem colSpan={{ base: 3, md: 2 }}>
+        <Box
+          w="full"
+          h={{ base: '340px', md: '457px' }}
+          borderRadius="2xl"
+          overflow="hidden"
+        >
           <GoogleMap
             options={options}
             zoom={9}
@@ -44,12 +55,14 @@ const Map = () => {
           </GoogleMap>
         </Box>
       </GridItem>
-      <GridItem colSpan={1}>
-        <PropertyBox
-          property={selectedProperty}
-          key={selectedProperty.listing_id}
-        />
-      </GridItem>
+      <Show above="md">
+        <GridItem colSpan={1}>
+          <PropertyBox
+            property={selectedProperty}
+            key={selectedProperty.listing_id}
+          />
+        </GridItem>
+      </Show>
     </Grid>
   );
 };
