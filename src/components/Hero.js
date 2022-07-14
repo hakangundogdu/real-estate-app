@@ -70,7 +70,7 @@ export default function Hero() {
         >
           Find Your Dream Home
         </Text>
-        <Text fontSize={['xs', 'md', 'xl', 'xl']} fontWeight="semibold">
+        <Text fontSize={['md', 'md', 'xl', 'xl']} mb="2" fontWeight="semibold">
           Search properties for sale and to rent in the UK
         </Text>
         <Spacer />
