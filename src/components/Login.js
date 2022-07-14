@@ -136,7 +136,7 @@ export default function Login() {
                     <Text align={'center'}>
                       No account yet?{' '}
                       <Button colorScheme="green" variant="link">
-                        <Link to="/login">Sign up</Link>
+                        <Link to="/signup">Sign up</Link>
                       </Button>
                     </Text>
                   </Stack>
