@@ -1,5 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { db } from '../firebase-config';
+import {
+  collection,
+  doc,
+  setDoc,
+  getDocs,
+  getDoc,
+  addDoc,
+  deleteDoc,
+  query,
+  where,
+} from '@firebase/firestore';
 
 const listingSlice = createSlice({
   name: 'listing',
@@ -17,13 +29,7 @@ const listingSlice = createSlice({
         JSON.stringify(state.properties)
       );
     },
-    setFeaturedList(state, action) {
-      state.featuredProperties = action.payload.properties;
-      window.localStorage.setItem(
-        'Featured Property List',
-        JSON.stringify(state.featuredProperties)
-      );
-    },
+
     setSearchLocation(state, action) {
       state.searchLocation = action.payload;
     },
@@ -112,6 +118,57 @@ export const fetchFeaturedListingData = () => {
     dispatch(listingActions.isLoading());
   };
 };
+
+// export const getFavourites = () => {
+//   return async (dispatch) => {
+//     const q = query(collection(db, 'favourites'), where('user', '==', user));
+//     const data = await getDocs(q);
+
+//   };
+// };
+
+export const saveFavourites = ({ user, property }) => {
+  return async (dispatch) => {
+    const favCollectionRef = collection(db, 'favourites');
+    const propertyData = {
+      user: user,
+      listing_status: property.listing_status,
+      listing_id: property.listing_id,
+      title: property.title,
+      price: property.price,
+      image_645_430_url: property.image_645_430_url,
+      image_354_255_url: property.image_354_255_url,
+      num_bedrooms: property.num_bedrooms,
+      num_bathrooms: property.num_bathrooms,
+      latitude: property.latitude,
+      longitude: property.longitude,
+      displayable_address: property.displayable_address,
+    };
+
+    const saveProperty = async () => {
+      await addDoc(favCollectionRef, propertyData);
+    };
+
+    try {
+      await saveProperty();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+// export const deleteFavourite = (id) => {
+//   return async (dispatch) => {
+//     const devFavRef = doc(db, 'favourites', id);
+
+//     const delSaved = async () => {
+//       await deleteDoc(devFavRef);
+//     };
+//     try {
+//       await delSaved();
+//     } catch (error) {}
+//   };
+// };
 
 export const listingActions = listingSlice.actions;
 

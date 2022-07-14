@@ -1,6 +1,7 @@
 import { Box, Image, Flex, Badge, IconButton, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { saveFavourites } from '../store/listing-slice';
 import { BiBath, BiBed, BiHeart } from 'react-icons/bi';
 import FallbackImage from '../assets/fallback.png';
 import millify from 'millify';
@@ -16,7 +17,14 @@ const PropertyBox = ({
     listing_status,
     listing_id,
   },
+  seeDetails,
 }) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+  const saveHandler = ({ property }) => {
+    dispatch(saveFavourites({ user: user, property: property }));
+  };
+
   return (
     <Link to={`/properties/${listing_id}`}>
       <Box role="group" p="5" borderRadius="2xl" borderWidth="1px">
@@ -33,6 +41,22 @@ const PropertyBox = ({
             aria-label="Like"
             icon={<BiHeart />}
             z-index="10"
+            onClick={(e) => {
+              e.stopPropagation();
+              saveHandler({
+                property: {
+                  image_354_255_url,
+                  title,
+                  price,
+                  num_bathrooms,
+                  num_bedrooms,
+                  county,
+                  displayable_address,
+                  listing_status,
+                  listing_id,
+                },
+              });
+            }}
           />
           <Image
             borderRadius="xl"

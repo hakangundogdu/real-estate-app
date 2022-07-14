@@ -1,22 +1,21 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { saveFavourites } from '../store/listing-slice';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { useParams } from 'react-router-dom';
-import {
-  Box,
-  Image,
-  Flex,
-  Badge,
-  Text,
-  Stack,
-  Button,
-  Heading,
-  Container,
-} from '@chakra-ui/react';
+import { Box, Image, Flex, Badge, Text, Stack, Button } from '@chakra-ui/react';
 import { BiBath, BiBed, BiHeart, BiPhone } from 'react-icons/bi';
 import FallbackImage from '../assets/fallback.png';
 import millify from 'millify';
 
 const PropertyDetail = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+
+  const saveHandler = (property) => {
+    dispatch(saveFavourites({ user: user, property: property }));
+  };
+
   const properties = JSON.parse(window.localStorage.getItem('Property List'));
 
   const params = useParams();
@@ -101,6 +100,7 @@ const PropertyDetail = () => {
               leftIcon={<BiHeart size={20} />}
               colorScheme="green"
               variant="solid"
+              onClick={() => saveHandler(property)}
             >
               Save
             </Button>
