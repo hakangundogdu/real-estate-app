@@ -1,6 +1,6 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 
-import { auth } from '../firebase-config';
+import { auth, provider } from '../firebase-config';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/user-slice';
 
@@ -24,11 +24,23 @@ import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { BiHide, BiShow } from 'react-icons/bi';
+import { FcGoogle } from 'react-icons/fc';
 
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleSignWithGoogle = () => {
+    signInWithPopup(auth, provider).then(() => {
+      dispatch(
+        login({
+          user: auth.currentUser.email,
+        })
+      );
+      navigate('/');
+    });
+  };
 
   return (
     <Flex
@@ -102,7 +114,6 @@ export default function Login() {
                     isInvalid={!!errors.password && touched.password}
                   >
                     <FormLabel htmlFor="password">Password</FormLabel>
-
                     <InputGroup>
                       <Field
                         as={Input}
@@ -132,18 +143,32 @@ export default function Login() {
                       Login
                     </Button>
                   </Stack>
-                  <Stack pt={6}>
-                    <Text align={'center'}>
-                      No account yet?{' '}
-                      <Button colorScheme="green" variant="link">
-                        <Link to="/signup">Sign up</Link>
-                      </Button>
-                    </Text>
-                  </Stack>
                 </Stack>
               </form>
             )}
           </Formik>
+          <Stack spacing={6} pt={6}>
+            <Button
+              leftIcon={<FcGoogle size={24} />}
+              type="submit"
+              loadingText="Submitting"
+              size="lg"
+              colorScheme="gray.700"
+              variant="outline"
+              _hover={{ bg: 'green.50' }}
+              onClick={handleSignWithGoogle}
+            >
+              Login with Google
+            </Button>
+          </Stack>
+          <Stack pt={6}>
+            <Text align={'center'}>
+              No account yet?{' '}
+              <Button colorScheme="green" variant="link">
+                <Link to="/signup">Sign up</Link>
+              </Button>
+            </Text>
+          </Stack>
         </Box>
       </Stack>
     </Flex>

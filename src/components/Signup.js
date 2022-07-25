@@ -1,7 +1,8 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-
-import { auth } from '../firebase-config';
+import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { auth, provider } from '../firebase-config';
 import { useDispatch } from 'react-redux';
+import { FcGoogle } from 'react-icons/fc';
+
 import { login } from '../store/user-slice';
 
 import {
@@ -30,6 +31,17 @@ export default function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleSignWithGoogle = () => {
+    signInWithPopup(auth, provider).then(() => {
+      dispatch(
+        login({
+          user: auth.currentUser.email,
+        })
+      );
+      navigate('/');
+    });
+  };
 
   return (
     <Flex
@@ -171,18 +183,32 @@ export default function Signup() {
                       Sign up
                     </Button>
                   </Stack>
-                  <Stack pt={6}>
-                    <Text align={'center'}>
-                      Already a user?{' '}
-                      <Button colorScheme="green" variant="link">
-                        <Link to="/login">Log in</Link>
-                      </Button>
-                    </Text>
-                  </Stack>
                 </Stack>
               </form>
             )}
           </Formik>
+          <Stack spacing={6} pt={6}>
+            <Button
+              leftIcon={<FcGoogle size={24} />}
+              type="submit"
+              loadingText="Submitting"
+              size="lg"
+              colorScheme="gray.700"
+              variant="outline"
+              _hover={{ bg: 'green.50' }}
+              onClick={handleSignWithGoogle}
+            >
+              Signup with Google
+            </Button>
+          </Stack>
+          <Stack pt={6}>
+            <Text align={'center'}>
+              Already a user?{' '}
+              <Button colorScheme="green" variant="link">
+                <Link to="/login">Log in</Link>
+              </Button>
+            </Text>
+          </Stack>
         </Box>
       </Stack>
     </Flex>

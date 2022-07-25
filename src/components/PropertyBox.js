@@ -29,7 +29,7 @@ const PropertyBox = ({
     <Link to={`/properties/${listing_id}`}>
       <Box role="group" p="5" borderRadius="2xl" borderWidth="1px">
         <Box position="relative">
-          <IconButton
+          {/* <IconButton
             display="none"
             _hover={{ bg: 'green.400', color: 'white' }}
             bg="gray.100"
@@ -57,7 +57,7 @@ const PropertyBox = ({
                 },
               });
             }}
-          />
+          /> */}
           <Image
             borderRadius="xl"
             fit="cover"
