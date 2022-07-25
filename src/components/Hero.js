@@ -11,23 +11,26 @@ export default function Hero() {
 
   const locationChangeHandler = (event) => {
     setLocation(event.target.value);
-    dispatch(listingActions.setSearchLocation(event.target.value));
   };
 
   const searchRentHandler = (e) => {
     e.preventDefault();
-    console.log(location);
     dispatch(listingActions.isLoading());
-    dispatch(listingActions.isSearched());
-    dispatch(fetchListingData({ area: location, listing_status: 'rent' }));
+    dispatch(listingActions.isSearched(true));
+    dispatch(fetchListingData({ county: location, listing_status: 'rent' }));
+    setLocation('');
+    dispatch(listingActions.setSearchLocation(location));
   };
 
   const searchSaleHandler = (e) => {
     e.preventDefault();
-    console.log(location);
     dispatch(listingActions.isLoading());
-    dispatch(listingActions.isSearched());
-    dispatch(fetchListingData({ area: location, listing_status: 'sale' }));
+    dispatch(listingActions.isSearched(true));
+    dispatch(
+      fetchListingData({ county: location || '', listing_status: 'sale' })
+    );
+    setLocation('');
+    dispatch(listingActions.setSearchLocation(location));
   };
 
   return (
@@ -77,7 +80,7 @@ export default function Hero() {
         <Stack direction={['column', 'row']} spacing={4}>
           <Input
             bg="white"
-            placeholder="e.g 'London'"
+            placeholder=" 'London', 'Leeds' or 'Bristol'"
             focusBorderColor="green.400"
             width="300px"
             size="md"
@@ -88,6 +91,7 @@ export default function Hero() {
             onChange={locationChangeHandler}
             type="text"
           />
+
           <Button
             onClick={searchSaleHandler}
             colorScheme="green"
