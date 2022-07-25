@@ -10,6 +10,8 @@ import SignupPage from './pages/SignupPage';
 import PropertyDetail from './pages/PropertyDetail';
 import NotFound from './pages/NotFound';
 
+import { fetchApi } from './lib/api';
+
 import {
   fetchFeaturedListingData,
   getFavourites,
