@@ -10,7 +10,8 @@ export default function Hero() {
   const dispatch = useDispatch();
 
   const locationChangeHandler = (event) => {
-    setLocation(event.target.value);
+    const loc = event.target.value;
+    setLocation(loc.charAt(0).toUpperCase() + loc.substring(1).toLowerCase());
   };
 
   const searchRentHandler = (e) => {
@@ -26,9 +27,7 @@ export default function Hero() {
     e.preventDefault();
     dispatch(listingActions.isLoading());
     dispatch(listingActions.isSearched(true));
-    dispatch(
-      fetchListingData({ county: location || '', listing_status: 'sale' })
-    );
+    dispatch(fetchListingData({ county: location, listing_status: 'sale' }));
     setLocation('');
     dispatch(listingActions.setSearchLocation(location));
   };

@@ -15,7 +15,7 @@ const PropertyBox = ({
     county,
     displayable_address,
     listing_status,
-    listing_id,
+    id,
   },
   seeDetails,
 }) => {
@@ -26,7 +26,7 @@ const PropertyBox = ({
   };
 
   return (
-    <Link to={`/properties/${listing_id}`}>
+    <Link to={`/properties/${id}`}>
       <Box role="group" p="5" borderRadius="2xl" borderWidth="1px">
         <Box position="relative">
           {/* <IconButton

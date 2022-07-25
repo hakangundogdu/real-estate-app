@@ -25,7 +25,6 @@ import { onAuthStateChanged } from 'firebase/auth';
 function App() {
   const dispatch = useDispatch();
   // const user = useSelector((state) => state.user.user);
-
   const [user, setUser] = useState();
 
   onAuthStateChanged(auth, (currentUser) => {
@@ -40,7 +39,6 @@ function App() {
         // user is logged in, send the user's details to redux, store the current user in the state
       } else {
         dispatch(logout());
-        console.log('app', auth.currentUser);
       }
     });
   }, [dispatch]);
@@ -54,7 +52,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/properties" element={<Properties />} />
-      <Route path="/properties/:listing_id" element={<PropertyDetail />} />
+      <Route path="/properties/:id" element={<PropertyDetail />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route

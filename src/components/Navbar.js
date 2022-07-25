@@ -33,7 +33,6 @@ import { auth } from '../firebase-config';
 const NavBar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-  console.log('Navbar', user);
 
   const logoutHandler = () => {
     signOut(auth)

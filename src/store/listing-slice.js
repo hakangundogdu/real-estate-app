@@ -2,7 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { db } from '../firebase-config';
 import { collection, addDoc } from '@firebase/firestore';
-import { fetchProperties, fetchNoLocation } from '../lib/api';
+import {
+  fetchProperties,
+  fetchNoLocation,
+  fetchSingleProperty,
+} from '../lib/api';
 
 const listingSlice = createSlice({
   name: 'listing',
@@ -11,6 +15,7 @@ const listingSlice = createSlice({
     isLoading: false,
     isSearched: false,
     searchLocation: null,
+    property: null,
   },
   reducers: {
     setList(state, action) {
@@ -20,7 +25,9 @@ const listingSlice = createSlice({
         JSON.stringify(state.properties)
       );
     },
-
+    setProperty(state, action) {
+      state.property = action.payload;
+    },
     setSearchLocation(state, action) {
       state.searchLocation = action.payload;
     },
@@ -105,6 +112,12 @@ export const fetchFeaturedListingData = () => {
       })
     );
     dispatch(listingActions.isLoading());
+  };
+};
+export const fetchProperty = ({ id }) => {
+  return async (dispatch) => {
+    const singleProperty = await fetchSingleProperty({ id });
+    dispatch(listingActions.setProperty(singleProperty));
   };
 };
 
