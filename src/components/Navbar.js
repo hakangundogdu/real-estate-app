@@ -95,14 +95,13 @@ const NavBar = () => {
           </Link>
 
           <Menu autoSelect="false" direction="ltr">
-            <MenuButton>
-              <IconButton
-                bg="gray.200"
-                _hover={{ bg: 'gray.300' }}
-                aria-label="Like"
-                icon={<BiUser />}
-                borderRadius="2xl"
-              />{' '}
+            <MenuButton
+              bg="gray.200"
+              _hover={{ bg: 'gray.300' }}
+              borderRadius="2xl"
+              p="3"
+            >
+              <BiUser />{' '}
             </MenuButton>
             <MenuList>
               <MenuItem icon={<BiUser size="16px" />}>My Account</MenuItem>
