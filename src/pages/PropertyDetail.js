@@ -13,20 +13,28 @@ import {
   Button,
   Center,
   CircularProgress,
+  IconButton,
+  VStack,
 } from '@chakra-ui/react';
-import { BiBath, BiBed, BiHeart, BiPhone } from 'react-icons/bi';
+import {
+  BiBath,
+  BiBed,
+  BiHeart,
+  BiPhone,
+  BiChevronRight,
+  BiChevronLeft,
+} from 'react-icons/bi';
 import FallbackImage from '../assets/fallback.png';
 import millify from 'millify';
 import { fetchSingleProperty } from '../lib/api';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import Error from '../components/Error';
 
 const PropertyDetail = () => {
   const dispatch = useDispatch();
-  const [property, setProperty] = useState();
   const user = useSelector((state) => state.user.user);
-  const navigate = useNavigate();
+  const [property, setProperty] = useState();
+  const [currentImage, setCurrentImage] = useState(0);
   const [error, SetError] = useState(false);
 
   const saveHandler = (property) => {
@@ -61,6 +69,29 @@ const PropertyDetail = () => {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
 
+  //Image Scroll
+
+  const propertyImages = property?.images.map((image) => {
+    return image['645x430'];
+  });
+  //Scroll Functions
+  const scrollLeft = () => {
+    setCurrentImage((currentImage) => {
+      if (currentImage === 0) {
+        return propertyImages.length - 1;
+      }
+      return currentImage - 1;
+    });
+  };
+  const scrollRight = () => {
+    setCurrentImage((currentImage) => {
+      if (currentImage === propertyImages.length - 1) {
+        return 0;
+      }
+      return currentImage + 1;
+    });
+  };
+
   return (
     <>
       <Box my="8" minH="100%">
@@ -77,19 +108,58 @@ const PropertyDetail = () => {
               direction={{ base: 'column', md: 'row' }}
               role="group"
               justify="flex-start"
-              borderRadius="2xl"
-              borderWidth="1px"
-              overflow="hidden"
               align="center"
             >
-              <Image
+              <VStack position="relative" w="full">
+                <IconButton
+                  display="none"
+                  bg="whiteAlpha.800"
+                  shadow="lg"
+                  _groupHover={{ display: 'flex' }}
+                  position="absolute"
+                  top="46%"
+                  left="2"
+                  color="gray.700"
+                  icon={<BiChevronLeft size={36} />}
+                  z-index="10"
+                  onClick={scrollLeft}
+                />
+                <IconButton
+                  display="none"
+                  bg="whiteAlpha.800"
+                  shadow="lg"
+                  _groupHover={{ display: 'flex' }}
+                  position="absolute"
+                  top="46%"
+                  right="2"
+                  color="gray.700"
+                  icon={<BiChevronRight size={36} />}
+                  z-index="10"
+                  onClick={scrollRight}
+                />
+
+                <Image
+                  objectFit="cover"
+                  alt="house"
+                  w="full"
+                  borderRadius="2xl"
+                  overflow="hidden"
+                  h={{ base: '300px', md: '430px' }}
+                  src={propertyImages[currentImage]}
+                  fallbackSrc={FallbackImage}
+                />
+              </VStack>
+
+              {/* <Image
                 objectFit="cover"
                 alt="house"
                 w="full"
+                borderRadius="2xl"
+                overflow="hidden"
                 h={{ base: '300px', md: '430px' }}
                 src={property.image_645_430_url}
                 fallbackSrc={FallbackImage}
-              />
+              /> */}
 
               <Flex
                 direction="column"
@@ -155,6 +225,7 @@ const PropertyDetail = () => {
                 </Stack>
               </Flex>
             </Stack>
+
             {isLoaded ? (
               <Box
                 w="full"
