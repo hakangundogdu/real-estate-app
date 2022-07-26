@@ -1,16 +1,17 @@
 import Footer from './Footer';
 import Navbar from './Navbar';
 
-import { Box } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
 
 const Layout = ({ children }) => {
   return (
-    <Box
+    <VStack
       maxWidth="1280px"
       minHeight="100vh"
       align="space-between"
       px="4"
       m="auto"
+      justify="space-between"
     >
       <header>
         <Navbar />
@@ -19,7 +20,7 @@ const Layout = ({ children }) => {
       <footer position="absolute">
         <Footer />
       </footer>
-    </Box>
+    </VStack>
   );
 };
 

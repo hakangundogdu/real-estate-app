@@ -10,8 +10,25 @@ const options = {
   scrollwheel: true,
 };
 
+const coordinates = {
+  London: {
+    lat: 51.509865,
+    lng: -0.118092,
+  },
+  Leeds: {
+    lat: 53.801277,
+    lng: -1.548567,
+  },
+  Bristol: {
+    lat: 51.454514,
+    lng: -2.58791,
+  },
+};
+
 const Map = () => {
   const properties = useSelector((state) => state.listing.properties);
+  const searchLocation = useSelector((state) => state.listing.searchLocation);
+
   const [selectedProperty, setSelectedProperty] = useState(properties[0]);
 
   const { isLoaded } = useLoadScript({
@@ -37,11 +54,8 @@ const Map = () => {
         >
           <GoogleMap
             options={options}
-            zoom={9}
-            center={{
-              lat: properties[0].latitude || 51.509865,
-              lng: properties[0].longitude || -0.118092,
-            }}
+            zoom={11}
+            center={coordinates[searchLocation] || coordinates.London}
             mapContainerStyle={{ width: '100%', height: '100%' }}
             defaultOptions={{ disableDefaultUI: false }}
           >
