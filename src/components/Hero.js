@@ -1,18 +1,39 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Stack, Flex, Button, Text, Spacer, Input } from '@chakra-ui/react';
+import {
+  Stack,
+  Flex,
+  Button,
+  Box,
+  Text,
+  Spacer,
+  Input,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+  useDisclosure,
+} from '@chakra-ui/react';
 
 import { fetchListingData, listingActions } from '../store/listing-slice';
 
 export default function Hero() {
   const [location, setLocation] = useState('');
   const dispatch = useDispatch();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const locationChangeHandler = (event) => {
     const loc = event.target.value;
     setLocation(loc.charAt(0).toUpperCase() + loc.substring(1).toLowerCase());
   };
+
+  const allowedLocations = ['London', 'Leeds', 'Bristol', ''];
 
   const searchRentHandler = (e) => {
     e.preventDefault();
@@ -30,6 +51,11 @@ export default function Hero() {
     dispatch(fetchListingData({ county: location, listing_status: 'sale' }));
     setLocation('');
     dispatch(listingActions.setSearchLocation(location));
+  };
+
+  const popUpHandler = (e) => {
+    e.preventDefault();
+    onOpen();
   };
 
   return (
@@ -77,29 +103,59 @@ export default function Hero() {
         </Text>
         <Spacer />
         <Stack direction={['column', 'row']} spacing={4}>
-          <Input
-            bg="white"
-            placeholder=" 'London', 'Leeds' or 'Bristol'"
-            focusBorderColor="green.400"
-            width="300px"
-            size="md"
-            variant="outline"
-            color="gray.800"
-            isRequired={true}
-            value={location}
-            onChange={locationChangeHandler}
-            type="text"
-          />
+          <Popover
+            returnFocusOnClose={false}
+            isOpen={isOpen}
+            onClose={onClose}
+            placement="bottom-start"
+            closeOnBlur={true}
+          >
+            <PopoverTrigger>
+              <Input
+                bg="white"
+                placeholder=" 'London', 'Leeds' or 'Bristol'"
+                focusBorderColor="green.400"
+                width="300px"
+                size="md"
+                variant="outline"
+                color="gray.800"
+                isRequired={true}
+                value={location}
+                onChange={locationChangeHandler}
+                type="search"
+              />
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverBody p="4" color="gray.800">
+                Please search 'London', 'Leeds' or 'Bristol'
+                <Box display="flex" justifyContent="flex-end">
+                  {' '}
+                  <Button colorScheme="green" px="8" onClick={onClose}>
+                    OK
+                  </Button>
+                </Box>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
 
           <Button
-            onClick={searchSaleHandler}
+            onClick={
+              allowedLocations.includes(location)
+                ? searchSaleHandler
+                : popUpHandler
+            }
             colorScheme="green"
             variant="solid"
           >
             <a href="/">For Sale</a>
           </Button>
           <Button
-            onClick={searchRentHandler}
+            onClick={
+              allowedLocations.includes(location)
+                ? searchRentHandler
+                : popUpHandler
+            }
             colorScheme="green"
             variant="solid"
           >
