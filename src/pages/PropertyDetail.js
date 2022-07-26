@@ -39,6 +39,12 @@ const PropertyDetail = () => {
     );
   }, [id]);
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    });
+  }, []);
+
   const options = {
     disableDefaultUI: true,
     zoomControl: true,
