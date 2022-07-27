@@ -1,16 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const retrieveStoredUid = () => {
+  const storedUid = localStorage.getItem('uid');
+  return storedUid ? storedUid : null;
+};
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    user: null,
+    uid: retrieveStoredUid(),
+    isLoggedIn: !!retrieveStoredUid(),
   },
   reducers: {
     login(state, action) {
-      state.user = action.payload.user;
+      state.uid = action.payload.uid;
+      localStorage.setItem('uid', state.uid);
     },
     logout(state) {
       state.user = null;
+      localStorage.removeItem('uid');
     },
   },
 });

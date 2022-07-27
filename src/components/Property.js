@@ -1,17 +1,10 @@
 import { useState } from 'react';
-import {
-  Box,
-  SimpleGrid,
-  Text,
-  CircularProgress,
-  Center,
-  Button,
-  HStack,
-} from '@chakra-ui/react';
+import { Box, SimpleGrid, Text, Button, HStack } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 import PropertyBox from './PropertyBox';
 import Map from './Map';
+import Spinner from './Spinner';
 
 const Property = () => {
   const properties = useSelector((state) => state.listing.properties);
@@ -25,7 +18,7 @@ const Property = () => {
       <Box my="8">
         {!isLoading && (
           <>
-            <HStack align="center" justify="space-between">
+            <HStack align="center" px="4" justify="space-between">
               <Text
                 fontSize={{ base: 'lg', md: 'xl' }}
                 fontWeight="semibold"
@@ -56,12 +49,7 @@ const Property = () => {
           </>
         )}
 
-        {isLoading && (
-          <Center h="200px" w="100%">
-            <CircularProgress isIndeterminate color="green.300" />
-            <Text mt={2} fontWeight="semibold" lineHeight="short"></Text>
-          </Center>
-        )}
+        {isLoading && <Spinner />}
       </Box>
     </>
   );

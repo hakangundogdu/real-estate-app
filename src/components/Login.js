@@ -35,7 +35,7 @@ export default function Login() {
     signInWithPopup(auth, provider).then(() => {
       dispatch(
         login({
-          user: auth.currentUser.email,
+          uid: auth.currentUser.uid,
         })
       );
       navigate('/');
@@ -80,7 +80,7 @@ export default function Login() {
                   // Signed in
                   dispatch(
                     login({
-                      user: auth.currentUser.email,
+                      uid: auth.currentUser.uid,
                     })
                   );
                   navigate('/');

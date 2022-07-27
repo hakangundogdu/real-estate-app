@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+
 import { db } from '../firebase-config';
 import { collection, addDoc } from '@firebase/firestore';
 import {

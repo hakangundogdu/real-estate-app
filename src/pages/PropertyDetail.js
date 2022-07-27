@@ -26,9 +26,21 @@ import {
 } from 'react-icons/bi';
 import FallbackImage from '../assets/fallback.png';
 import millify from 'millify';
-import { fetchSingleProperty } from '../lib/api';
-import axios from 'axios';
+import { fetchSingleProperty, fetchMultipleProperty } from '../lib/api';
 import Error from '../components/Error';
+import { colRef } from '../firebase-config';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  get,
+  setDoc,
+  getDoc,
+  addDoc,
+  deleteDoc,
+} from '@firebase/firestore';
 
 const PropertyDetail = () => {
   const dispatch = useDispatch();
@@ -37,16 +49,24 @@ const PropertyDetail = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [error, SetError] = useState(false);
 
-  const saveHandler = (property) => {
-    dispatch(saveFavourites({ user: user, property: property }));
-  };
+  const saveHandler = () => {};
 
   const { id } = useParams();
 
   useEffect(() => {
-    axios(`https://property-test.herokuapp.com/listings/${id}`)
+    fetchSingleProperty({ id })
       .then((response) => {
         setProperty(response.data);
+      })
+      .catch((err) => {
+        SetError(true);
+      });
+  }, [id]);
+
+  useEffect(() => {
+    fetchMultipleProperty()
+      .then((response) => {
+        console.log('saved properties', response.data);
       })
       .catch((err) => {
         SetError(true);

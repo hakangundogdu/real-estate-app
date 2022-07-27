@@ -10,11 +10,8 @@ import SignupPage from './pages/SignupPage';
 import PropertyDetail from './pages/PropertyDetail';
 import NotFound from './pages/NotFound';
 
-import { fetchApi } from './lib/api';
-
 import {
   fetchFeaturedListingData,
-  getFavourites,
   listingActions,
 } from './store/listing-slice';
 import { login, logout } from './store/user-slice';
@@ -24,18 +21,15 @@ import { onAuthStateChanged } from 'firebase/auth';
 
 function App() {
   const dispatch = useDispatch();
-  // const user = useSelector((state) => state.user.user);
-  const [user, setUser] = useState();
-
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-  });
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   useEffect(() => {
     onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
         console.log('app', auth.currentUser.email);
-        dispatch(login({ user: auth.currentUser.email }));
+        dispatch(login({ uid: auth.currentUser.uid }));
+        console.log(auth);
+        console.log(auth.currentUser);
         // user is logged in, send the user's details to redux, store the current user in the state
       } else {
         dispatch(logout());
@@ -57,7 +51,7 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route
         path="/saved"
-        element={user ? <SavedPage /> : <Navigate to="/login" />}
+        element={isLoggedIn ? <SavedPage /> : <Navigate to="/login" />}
       />
       <Route path="*" element={<NotFound />} />
     </Routes>
