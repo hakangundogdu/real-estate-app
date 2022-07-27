@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveFavourites, fetchProperty } from '../store/listing-slice';
+import { saveFavourites } from '../store/listing-slice';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { useParams } from 'react-router-dom';
 import {
@@ -11,8 +11,6 @@ import {
   Text,
   Stack,
   Button,
-  Center,
-  CircularProgress,
   IconButton,
   VStack,
 } from '@chakra-ui/react';
@@ -26,25 +24,13 @@ import {
 } from 'react-icons/bi';
 import FallbackImage from '../assets/fallback.png';
 import millify from 'millify';
-import { fetchSingleProperty, fetchMultipleProperty } from '../lib/api';
+import { fetchSingleProperty } from '../lib/api';
 import Error from '../components/Error';
-import { colRef } from '../firebase-config';
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  get,
-  setDoc,
-  getDoc,
-  addDoc,
-  deleteDoc,
-} from '@firebase/firestore';
+import Spinner from '../components/Spinner';
 
 const PropertyDetail = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
+  const userId = useSelector((state) => state.user.uid);
   const [property, setProperty] = useState();
   const [currentImage, setCurrentImage] = useState(0);
   const [error, SetError] = useState(false);
@@ -57,16 +43,6 @@ const PropertyDetail = () => {
     fetchSingleProperty({ id })
       .then((response) => {
         setProperty(response.data);
-      })
-      .catch((err) => {
-        SetError(true);
-      });
-  }, [id]);
-
-  useEffect(() => {
-    fetchMultipleProperty()
-      .then((response) => {
-        console.log('saved properties', response.data);
       })
       .catch((err) => {
         SetError(true);
@@ -114,16 +90,11 @@ const PropertyDetail = () => {
 
   return (
     <>
-      <Box my="8" minH="100%">
+      <Box minH="100%">
         {error && <Error />}
-        {!error && !property && (
-          <Center h="200px" w="100%">
-            <CircularProgress isIndeterminate color="green.300" />
-            <Text mt={2} fontWeight="semibold" lineHeight="short"></Text>
-          </Center>
-        )}
+        {!error && !property && <Spinner />}
         {property && (
-          <Box my="8">
+          <Box>
             <Stack
               direction={{ base: 'column', md: 'row' }}
               role="group"
