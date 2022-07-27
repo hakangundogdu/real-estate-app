@@ -13,6 +13,7 @@ import NotFound from './pages/NotFound';
 import {
   fetchFeaturedListingData,
   listingActions,
+  fetchSavedProperty,
 } from './store/listing-slice';
 import { login, logout } from './store/user-slice';
 
@@ -36,6 +37,7 @@ function App() {
   useEffect(() => {
     dispatch(listingActions.isLoading());
     dispatch(fetchFeaturedListingData());
+    dispatch(fetchSavedProperty({ userId: userId }));
   }, [dispatch]);
 
   return (
