@@ -8,7 +8,6 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     uid: retrieveStoredUid(),
-    isLoggedIn: !!retrieveStoredUid(),
   },
   reducers: {
     login(state, action) {
@@ -16,7 +15,7 @@ const userSlice = createSlice({
       localStorage.setItem('uid', state.uid);
     },
     logout(state) {
-      state.user = null;
+      state.uid = null;
       localStorage.removeItem('uid');
     },
   },

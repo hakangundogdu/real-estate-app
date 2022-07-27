@@ -7,13 +7,13 @@ import NavUser from './NavUser';
 import NavLogin from './NavLogin';
 
 const NavBar = () => {
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const userId = useSelector((state) => state.user.uid);
 
   return (
     <Flex bg="gray.50" px="0" my="4" p="4" align="center" borderRadius="2xl">
       <NavLogo />
       <Spacer />
-      {isLoggedIn ? <NavUser /> : <NavLogin />}
+      {userId ? <NavUser /> : <NavLogin />}
     </Flex>
   );
 };

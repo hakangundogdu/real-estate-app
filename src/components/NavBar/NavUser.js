@@ -60,9 +60,9 @@ const NavUser = () => {
         </MenuButton>
         <MenuList>
           <MenuItem icon={<BiUser size="16px" />}>My Account</MenuItem>
-          <MenuItem icon={<BiHeart size="16px" />}>
-            <Link to="/saved">My Saved List</Link>
-          </MenuItem>
+          <Link to="/saved">
+            <MenuItem icon={<BiHeart size="16px" />}>My Saved List</MenuItem>
+          </Link>
           <MenuItem icon={<BiCog size="16px" />}>Settings</MenuItem>
           <MenuDivider />
           <MenuItem icon={<BiLogOut size="16px" />} onClick={logoutHandler}>

@@ -21,16 +21,12 @@ import { onAuthStateChanged } from 'firebase/auth';
 
 function App() {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const userId = useSelector((state) => state.user.uid);
 
   useEffect(() => {
     onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
-        console.log('app', auth.currentUser.email);
         dispatch(login({ uid: auth.currentUser.uid }));
-        console.log(auth);
-        console.log(auth.currentUser);
-        // user is logged in, send the user's details to redux, store the current user in the state
       } else {
         dispatch(logout());
       }
@@ -51,7 +47,7 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route
         path="/saved"
-        element={isLoggedIn ? <SavedPage /> : <Navigate to="/login" />}
+        element={userId ? <SavedPage /> : <Navigate to="/login" />}
       />
       <Route path="*" element={<NotFound />} />
     </Routes>
