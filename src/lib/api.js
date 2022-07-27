@@ -30,6 +30,13 @@ export const fetchNoLocation = async (props) => {
 };
 
 export const fetchSingleProperty = async (props) => {
-  const response = await axios(`baseUrl/${props.id}`);
+  const response = await axios(`${baseURL}/${props.id}`);
+  return response;
+};
+
+export const fetchMultipleProperty = async ({ savedIds }) => {
+  const idQuery = savedIds.map((id) => `id=${id}`).join('&');
+  const url = `${baseURL}?${idQuery}`;
+  const response = await axios(url);
   return response;
 };
