@@ -1,5 +1,5 @@
 import Footer from './Footer';
-import Navbar from './Navbar';
+import NavBar from './NavBar/NavBar';
 
 import { VStack } from '@chakra-ui/react';
 
@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
       justify="space-between"
     >
       <header>
-        <Navbar />
+        <NavBar />
       </header>
       <main>{children}</main>
       <footer position="absolute">
