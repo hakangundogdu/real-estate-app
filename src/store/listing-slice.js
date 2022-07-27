@@ -25,6 +25,8 @@ const listingSlice = createSlice({
     searchLocation: null,
     property: null,
     savedProperties: [],
+    savedIds: [],
+    userId: null,
   },
   reducers: {
     setList(state, action) {
@@ -35,7 +37,13 @@ const listingSlice = createSlice({
       );
     },
     setSavedList(state, action) {
-      state.savedProperties = action.payload.properties;
+      state.savedProperties = action.payload.savedProperties;
+    },
+    setSavedIds(state, action) {
+      state.savedIds = action.payload.savedIds;
+    },
+    setUserId(state, action) {
+      state.userId = action.payload.userId;
     },
 
     setProperty(state, action) {
@@ -96,68 +104,42 @@ export const fetchProperty = ({ id }) => {
   };
 };
 
-export const fetchSavedProperty = ({ userId }) => {
+export const fetchSavedIds = ({ userId }) => {
   const q = query(colRef, where('uid', '==', `${userId}`));
 
   return async (dispatch) => {
     onSnapshot(q, (snapshot) => {
       let userData = [];
       snapshot.forEach((doc) => {
-        userData.push(doc.data());
+        userData.push({ ...doc.data(), id: doc.id });
       });
-      fetchMultipleProperty({ savedIds: userData[0].saved }).then((data) => {
-        dispatch(
-          listingActions.setSavedList({
-            properties: data.data,
-          })
-        );
-      });
+      console.log('userData', userData);
+
+      if (userData.length === 0) {
+        return;
+      } else {
+        dispatch(listingActions.setSavedIds({ savedIds: userData[0].saved }));
+        dispatch(listingActions.setUserId({ userId: userData[0].id }));
+      }
     });
   };
 };
-
-export const saveFavourites = ({ user, property }) => {
+export const fetchSavedProperty = ({ savedIds }) => {
   return async (dispatch) => {
-    const favCollectionRef = collection(db, 'favourites');
-    const propertyData = {
-      user: user,
-      listing_status: property.listing_status,
-      listing_id: property.listing_id,
-      title: property.title,
-      price: property.price,
-      image_645_430_url: property.image_645_430_url,
-      image_354_255_url: property.image_354_255_url,
-      num_bedrooms: property.num_bedrooms,
-      num_bathrooms: property.num_bathrooms,
-      latitude: property.latitude,
-      longitude: property.longitude,
-      displayable_address: property.displayable_address,
-    };
-
-    const saveProperty = async () => {
-      await addDoc(favCollectionRef, propertyData);
-    };
-
-    try {
-      await saveProperty();
-    } catch (error) {
-      console.log(error);
+    if (savedIds.length === 0) {
+      return;
+    } else {
+      fetchMultipleProperty({ savedIds: savedIds }).then((data) => {
+        console.log(data.data);
+        dispatch(
+          listingActions.setSavedList({
+            savedProperties: data.data,
+          })
+        );
+      });
     }
   };
 };
-
-// export const deleteFavourite = (id) => {
-//   return async (dispatch) => {
-//     const devFavRef = doc(db, 'favourites', id);
-
-//     const delSaved = async () => {
-//       await deleteDoc(devFavRef);
-//     };
-//     try {
-//       await delSaved();
-//     } catch (error) {}
-//   };
-// };
 
 export const listingActions = listingSlice.actions;
 

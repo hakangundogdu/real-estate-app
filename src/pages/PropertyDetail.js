@@ -27,15 +27,36 @@ import millify from 'millify';
 import { fetchSingleProperty } from '../lib/api';
 import Error from '../components/Error';
 import Spinner from '../components/Spinner';
+import { db, colRef } from '../firebase-config';
+import { addDoc, doc, updateDoc } from '@firebase/firestore';
 
 const PropertyDetail = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.uid);
+  const savedIds = useSelector((state) => state.listing.savedIds);
+  const firestoreUserId = useSelector((state) => state.listing.userId);
   const [property, setProperty] = useState();
   const [currentImage, setCurrentImage] = useState(0);
   const [error, SetError] = useState(false);
 
-  const saveHandler = () => {};
+  const docRef = doc(db, 'users', `${firestoreUserId}`);
+
+  const saveHandler = ({ id }) => {
+    const newList = [...savedIds, id];
+    console.log('newList', newList);
+
+    if (savedIds.length === 0) {
+      addDoc(colRef, {
+        uid: userId,
+        saved: newList,
+      });
+    } else {
+      updateDoc(docRef, {
+        uid: userId,
+        saved: newList,
+      });
+    }
+  };
 
   const { id } = useParams();
 
@@ -202,7 +223,7 @@ const PropertyDetail = () => {
                     leftIcon={<BiHeart size={20} />}
                     colorScheme="green"
                     variant="solid"
-                    onClick={() => saveHandler(property)}
+                    onClick={() => saveHandler({ id: property.id })}
                   >
                     Save
                   </Button>

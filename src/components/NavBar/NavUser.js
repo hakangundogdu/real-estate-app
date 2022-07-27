@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { logout } from '../../store/user-slice';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase-config';
+import { listingActions } from '../../store/listing-slice';
 
 const NavUser = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,8 @@ const NavUser = () => {
     signOut(auth)
       .then(() => {
         dispatch(logout());
+        dispatch(listingActions.setSavedIds([]));
+        dispatch(listingActions.setSavedList([]));
         // Sign-out successful.
       })
       .catch((error) => {

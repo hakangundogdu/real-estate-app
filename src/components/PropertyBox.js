@@ -1,7 +1,6 @@
 import { Box, Image, Flex, Badge, IconButton, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveFavourites } from '../store/listing-slice';
 import { BiBath, BiBed, BiHeart } from 'react-icons/bi';
 import FallbackImage from '../assets/fallback.png';
 import millify from 'millify';
@@ -21,9 +20,6 @@ const PropertyBox = ({
 }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-  const saveHandler = ({ property }) => {
-    dispatch(saveFavourites({ user: user, property: property }));
-  };
 
   return (
     <Link to={`/properties/${id}`}>

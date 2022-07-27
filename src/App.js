@@ -13,6 +13,7 @@ import NotFound from './pages/NotFound';
 import {
   fetchFeaturedListingData,
   listingActions,
+  fetchSavedIds,
   fetchSavedProperty,
 } from './store/listing-slice';
 import { login, logout } from './store/user-slice';
@@ -23,6 +24,11 @@ import { onAuthStateChanged } from 'firebase/auth';
 function App() {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.uid);
+  const savedProperties = useSelector((state) => state.listing.savedProperties);
+  const savedIds = useSelector((state) => state.listing.savedIds);
+
+  console.log(savedProperties);
+  console.log(savedIds);
 
   useEffect(() => {
     onAuthStateChanged(auth, (userAuth) => {
@@ -37,8 +43,12 @@ function App() {
   useEffect(() => {
     dispatch(listingActions.isLoading());
     dispatch(fetchFeaturedListingData());
-    dispatch(fetchSavedProperty({ userId: userId }));
-  }, [dispatch]);
+    dispatch(fetchSavedIds({ userId: userId }));
+  }, [dispatch, userId]);
+
+  useEffect(() => {
+    dispatch(fetchSavedProperty({ savedIds: savedIds }));
+  }, [dispatch, savedIds]);
 
   return (
     <Routes>
