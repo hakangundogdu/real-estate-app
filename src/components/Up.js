@@ -6,7 +6,10 @@ const Up = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => {
-    if (window.pageYOffset > 300) {
+    if (
+      window.pageYOffset > 300 &&
+      window.matchMedia('(min-width: 1000px)').matches
+    ) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
@@ -35,7 +38,7 @@ const Up = () => {
           shadow="lg"
           position="fixed"
           bottom="10"
-          right="48"
+          right="10"
           icon={<FaCaretUp />}
           z-index="10"
           onClick={scrollToTop}
