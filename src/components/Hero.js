@@ -1,5 +1,7 @@
 import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { fetchListingData, listingActions } from '../store/listing-slice';
+import ModalUi from './UI/ModalUi';
 
 import {
   Stack,
@@ -9,16 +11,7 @@ import {
   Spacer,
   Input,
   useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
 } from '@chakra-ui/react';
-
-import { fetchListingData, listingActions } from '../store/listing-slice';
 
 export default function Hero() {
   const [location, setLocation] = useState('');
@@ -122,7 +115,6 @@ export default function Hero() {
               type="search"
               ref={finalRef}
             />
-
             <Button
               onClick={
                 allowedLocations.includes(location)
@@ -148,26 +140,12 @@ export default function Hero() {
           </Stack>
         </Flex>
       </Flex>
-      <Modal
-        isCentered
+      <ModalUi
         onClose={onClose}
         isOpen={isOpen}
-        motionPreset="slideInBottom"
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Testing Mode</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>Please search 'London', 'Leeds' or 'Bristol'.</ModalBody>
-          <ModalFooter>
-            <Button colorScheme="green" onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+        title={'Test Mode!'}
+        message={"Please search 'London', 'Leeds' or 'Bristol'."}
+      />
     </>
   );
 }

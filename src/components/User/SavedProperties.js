@@ -1,22 +1,8 @@
 import { useState } from 'react';
 import { Text, SimpleGrid, VStack } from '@chakra-ui/react';
 
-import PropertyBox from './PropertyBox';
-import { useSelector, useDispatch } from 'react-redux';
-import { auth, colRef } from '../firebase-config';
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  onSnapshot,
-  doc,
-  get,
-  setDoc,
-  getDoc,
-  addDoc,
-  deleteDoc,
-} from '@firebase/firestore';
+import PropertyBox from '../PropertyBox';
+import { useSelector } from 'react-redux';
 
 const SavedProperties = () => {
   const userId = useSelector((state) => state.user.uid);

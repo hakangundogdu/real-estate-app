@@ -1,13 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { db, colRef } from '../firebase-config';
-import {
-  collection,
-  addDoc,
-  onSnapshot,
-  query,
-  where,
-} from '@firebase/firestore';
+import { colRef } from '../firebase-config';
+import { onSnapshot, query, where } from '@firebase/firestore';
 
 import {
   fetchProperties,
@@ -126,7 +120,7 @@ export const fetchSavedIds = ({ userId }) => {
 };
 export const fetchSavedProperty = ({ savedIds }) => {
   return async (dispatch) => {
-    if (savedIds.length === 0) {
+    if (savedIds.length === 0 || undefined) {
       return;
     } else {
       fetchMultipleProperty({ savedIds: savedIds }).then((data) => {

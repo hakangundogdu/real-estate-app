@@ -1,8 +1,8 @@
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 
-import { auth, provider } from '../firebase-config';
+import { auth, provider } from '../../firebase-config';
 import { useDispatch } from 'react-redux';
-import { login } from '../store/user-slice';
+import { login } from '../../store/user-slice';
 
 import {
   Flex,

@@ -42,6 +42,7 @@ const Up = () => {
           icon={<FaCaretUp />}
           z-index="10"
           onClick={scrollToTop}
+          borderRadius="2xl"
         />
       )}
     </>

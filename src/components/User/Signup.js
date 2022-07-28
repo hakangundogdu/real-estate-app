@@ -1,9 +1,9 @@
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { auth, provider } from '../firebase-config';
+import { auth, provider } from '../../firebase-config';
 import { useDispatch } from 'react-redux';
 import { FcGoogle } from 'react-icons/fc';
 
-import { login } from '../store/user-slice';
+import { login } from '../../store/user-slice';
 
 import {
   Flex,

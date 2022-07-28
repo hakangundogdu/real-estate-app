@@ -1,6 +1,4 @@
-import React from 'react';
-
-import SavedProperties from '../components/SavedProperties';
+import SavedProperties from '../components/User/SavedProperties';
 
 const SavedPage = () => {
   return (

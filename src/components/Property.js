@@ -3,8 +3,8 @@ import { Box, SimpleGrid, Text, Button, HStack } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 import PropertyBox from './PropertyBox';
-import Map from './Map';
-import Spinner from './Spinner';
+import Map from './Map/Map';
+import Spinner from './UI/Spinner';
 
 const Property = () => {
   const properties = useSelector((state) => state.listing.properties);
@@ -48,7 +48,6 @@ const Property = () => {
             </SimpleGrid>
           </>
         )}
-
         {isLoading && <Spinner />}
       </Box>
     </>

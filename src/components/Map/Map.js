@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { Box, Grid, GridItem, Show } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import PropertyBox from './PropertyBox';
+import PropertyBox from '../PropertyBox';
 
 const options = {
   disableDefaultUI: true,
