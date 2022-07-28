@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   IconButton,
   Stack,
@@ -17,6 +17,7 @@ import { listingActions } from '../../store/listing-slice';
 
 const NavUser = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const logoutHandler = () => {
     signOut(auth)
@@ -24,6 +25,7 @@ const NavUser = () => {
         dispatch(logout());
         dispatch(listingActions.setSavedIds([]));
         dispatch(listingActions.setSavedList([]));
+        navigate('/');
         // Sign-out successful.
       })
       .catch((error) => {
