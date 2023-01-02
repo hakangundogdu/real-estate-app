@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseURL = 'https://property-test.herokuapp.com/listings';
+const baseURL = 'https://adventurous-hem-tuna.cyclic.app/listings';
 
 export const fetchProperties = async (props) => {
   const params = {
