@@ -25,9 +25,6 @@ function App() {
   const savedProperties = useSelector((state) => state.listing.savedProperties);
   const savedIds = useSelector((state) => state.listing.savedIds);
 
-  console.log(savedProperties);
-  console.log(savedIds);
-
   useEffect(() => {
     onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {

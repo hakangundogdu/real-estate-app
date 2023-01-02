@@ -107,7 +107,6 @@ export const fetchSavedIds = ({ userId }) => {
       snapshot.forEach((doc) => {
         userData.push({ ...doc.data(), id: doc.id });
       });
-      console.log('userData', userData);
 
       if (userData.length === 0) {
         return;
