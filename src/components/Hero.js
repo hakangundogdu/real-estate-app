@@ -1,7 +1,7 @@
-import { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchListingData, listingActions } from '../store/listing-slice';
-import ModalUi from './UI/ModalUi';
+import { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { fetchListingData, listingActions } from "../store/listing-slice";
+import ModalUi from "./UI/ModalUi";
 
 import {
   Stack,
@@ -11,10 +11,10 @@ import {
   Spacer,
   Input,
   useDisclosure,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 export default function Hero() {
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState("");
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -26,14 +26,14 @@ export default function Hero() {
     setLocation(loc.charAt(0).toUpperCase() + loc.substring(1).toLowerCase());
   };
 
-  const allowedLocations = ['London', 'Leeds', 'Bristol', ''];
+  const allowedLocations = ["London", "Leeds", "Bristol", ""];
 
   const searchRentHandler = (e) => {
     e.preventDefault();
     dispatch(listingActions.isLoading());
     dispatch(listingActions.isSearched(true));
-    dispatch(fetchListingData({ county: location, listing_status: 'rent' }));
-    setLocation('');
+    dispatch(fetchListingData({ county: location, listing_status: "rent" }));
+    setLocation("");
     dispatch(listingActions.setSearchLocation(location));
   };
 
@@ -41,8 +41,8 @@ export default function Hero() {
     e.preventDefault();
     dispatch(listingActions.isLoading());
     dispatch(listingActions.isSearched(true));
-    dispatch(fetchListingData({ county: location, listing_status: 'sale' }));
-    setLocation('');
+    dispatch(fetchListingData({ county: location, listing_status: "sale" }));
+    setLocation("");
     dispatch(listingActions.setSearchLocation(location));
   };
 
@@ -54,13 +54,13 @@ export default function Hero() {
   return (
     <>
       <Flex
-        w={'full'}
-        h={'40vh'}
-        backgroundImage={'url(https://source.unsplash.com/178j8tJrNlc/1920)'}
-        backgroundSize={'cover'}
-        backgroundPosition={'center center'}
+        w={"full"}
+        h={"40vh"}
+        backgroundImage={"url(https://source.unsplash.com/178j8tJrNlc/1920)"}
+        backgroundSize={"cover"}
+        backgroundPosition={"center center"}
         borderRadius="2xl"
-        justify={'center'}
+        justify={"center"}
         align="center"
       >
         <Flex
@@ -69,16 +69,16 @@ export default function Hero() {
           justifyContent="center"
           bg="gray.800"
           width={[
-            '100%', // 0-30em
-            'lg', // 30em-48em
-            'xl', // 48em-62em
-            'xl', // 62em+
+            "100%", // 0-30em
+            "lg", // 30em-48em
+            "xl", // 48em-62em
+            "xl", // 62em+
           ]}
           height={[
-            '100%', // 0-30em
-            '40vh', // 30em-48em
-            '200', // 48em-62em
-            '200', // 62em+
+            "100%", // 0-30em
+            "40vh", // 30em-48em
+            "200", // 48em-62em
+            "200", // 62em+
           ]}
           p={7}
           borderRadius="2xl"
@@ -86,21 +86,21 @@ export default function Hero() {
           opacity="1"
         >
           <Text
-            fontSize={['2xl', '2xl', '3xl', '3xl']}
+            fontSize={["2xl", "2xl", "3xl", "3xl"]}
             color="green.400"
             fontWeight="bold"
           >
             Find Your Dream Home
           </Text>
           <Text
-            fontSize={['md', 'md', 'xl', 'xl']}
+            fontSize={["md", "md", "xl", "xl"]}
             mb="2"
             fontWeight="semibold"
           >
             Search properties for sale and to rent in the UK
           </Text>
           <Spacer />
-          <Stack direction={['column', 'row']} spacing={4}>
+          <Stack direction={["column", "column", "row", "row"]} spacing={4}>
             <Input
               bg="white"
               placeholder=" 'London', 'Leeds' or 'Bristol'"
@@ -143,7 +143,7 @@ export default function Hero() {
       <ModalUi
         onClose={onClose}
         isOpen={isOpen}
-        title={'Test Mode!'}
+        title={"Test Mode!"}
         message={"Please search 'London', 'Leeds' or 'Bristol'."}
       />
     </>
