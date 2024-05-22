@@ -1,5 +1,5 @@
-import axios from 'axios';
-const baseURL = 'https://adventurous-hem-tuna.cyclic.app/listings';
+import axios from "axios";
+const baseURL = "https://property-api-35.onrender.com/listings";
 
 export const fetchProperties = async (props) => {
   const params = {
@@ -9,7 +9,7 @@ export const fetchProperties = async (props) => {
   };
 
   const { data } = await axios({
-    method: 'GET',
+    method: "GET",
     url: baseURL,
     params,
   });
@@ -22,7 +22,7 @@ export const fetchNoLocation = async (props) => {
   };
 
   const { data } = await axios({
-    method: 'GET',
+    method: "GET",
     url: baseURL,
     params,
   });
@@ -35,7 +35,7 @@ export const fetchSingleProperty = async (props) => {
 };
 
 export const fetchMultipleProperty = async ({ savedIds }) => {
-  const idQuery = savedIds.map((id) => `id=${id}`).join('&');
+  const idQuery = savedIds.map((id) => `id=${id}`).join("&");
   const url = `${baseURL}?${idQuery}`;
   const response = await axios(url);
   return response;

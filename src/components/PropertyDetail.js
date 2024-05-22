@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import {
   Box,
   Image,
@@ -12,7 +12,7 @@ import {
   IconButton,
   VStack,
   useDisclosure,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 import {
   BiBath,
   BiBed,
@@ -20,16 +20,16 @@ import {
   BiPhone,
   BiChevronRight,
   BiChevronLeft,
-} from 'react-icons/bi';
-import FallbackImage from '../assets/fallback.png';
-import millify from 'millify';
-import { fetchSingleProperty } from '../lib/api';
-import Error from '../components/UI/Error';
-import Spinner from '../components/UI/Spinner';
-import { db, colRef } from '../firebase-config';
-import { addDoc, doc, updateDoc } from '@firebase/firestore';
-import MapWide from '../components/Map/MapWide';
-import ModalUi from './UI/ModalUi';
+} from "react-icons/bi";
+import FallbackImage from "../assets/fallback.png";
+import millify from "millify";
+import { fetchSingleProperty } from "../lib/api";
+import Error from "../components/UI/Error";
+import Spinner from "../components/UI/Spinner";
+import { db, colRef } from "../firebase-config";
+import { addDoc, doc, updateDoc } from "@firebase/firestore";
+import MapWide from "../components/Map/MapWide";
+import ModalUi from "./UI/ModalUi";
 
 const PropertyDetail = () => {
   const { id } = useParams();
@@ -42,11 +42,6 @@ const PropertyDetail = () => {
   const [isSaved, setSaved] = useState(savedIds.includes(id));
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  console.log(typeof id);
-  console.log('isSaved', isSaved);
-  console.log('savedIds', savedIds);
-  console.log('includes', savedIds.includes(id));
-
   useEffect(() => {
     setSaved(savedIds.includes(id));
   }, [savedIds]);
@@ -56,11 +51,11 @@ const PropertyDetail = () => {
     onOpen();
   };
 
-  const docRef = doc(db, 'users', `${firestoreUserId}`);
+  const docRef = doc(db, "users", `${firestoreUserId}`);
 
   const saveHandler = ({ id }) => {
     const newList = [...savedIds, id];
-    console.log('newList', newList);
+    console.log("newList", newList);
 
     if (savedIds.length === 0) {
       addDoc(colRef, {
@@ -77,7 +72,7 @@ const PropertyDetail = () => {
 
   const removeSaveHandler = ({ id }) => {
     const newList = savedIds.filter((item) => item !== id);
-    console.log('removedNewList', newList);
+    console.log("removedNewList", newList);
     updateDoc(docRef, {
       uid: userId,
       saved: newList,
@@ -103,7 +98,7 @@ const PropertyDetail = () => {
 
   //Image Scroll
   const propertyImages = property?.images.map((image) => {
-    return image['645x430'];
+    return image["645x430"];
   });
 
   //Scroll Functions
@@ -132,7 +127,7 @@ const PropertyDetail = () => {
         {property && (
           <Box>
             <Stack
-              direction={{ base: 'column', md: 'row' }}
+              direction={{ base: "column", md: "row" }}
               role="group"
               justify="flex-start"
               align="center"
@@ -170,7 +165,7 @@ const PropertyDetail = () => {
                   w="full"
                   borderRadius="2xl"
                   overflow="hidden"
-                  h={{ base: '300px', md: '430px' }}
+                  h={{ base: "300px", md: "430px" }}
                   src={propertyImages[currentImage]}
                   fallbackSrc={FallbackImage}
                 />
@@ -179,14 +174,14 @@ const PropertyDetail = () => {
                 direction="column"
                 h="100%"
                 w="100%"
-                gap={{ base: '1', md: '4' }}
-                p={{ base: '4', md: '10' }}
+                gap={{ base: "1", md: "4" }}
+                p={{ base: "4", md: "10" }}
                 align="flex-start"
                 justify="center"
               >
                 <Flex align="baseline">
                   <Badge colorScheme="blue" fontSize="md">
-                    {' '}
+                    {" "}
                     FOR {property.listing_status}
                   </Badge>
                 </Flex>
@@ -196,7 +191,7 @@ const PropertyDetail = () => {
                   fontWeight="semibold"
                   lineHeight="short"
                 >
-                  {property.title}{' '}
+                  {property.title}{" "}
                 </Text>
                 <Text fontSize="lg" mt={2}>
                   £{millify(property.price)}
@@ -210,14 +205,14 @@ const PropertyDetail = () => {
                   justifyContent="flex-start"
                   color="green.400"
                 >
-                  <BiBed size={24} />{' '}
+                  <BiBed size={24} />{" "}
                   <Text fontWeight="semibold" fontSize="lg" mr={6} ml={2}>
                     {property.num_bedrooms}
-                  </Text>{' '}
+                  </Text>{" "}
                   <BiBath size={24} />
                   <Text fontWeight="semibold" fontSize="lg">
                     {property.num_bathrooms}
-                  </Text>{' '}
+                  </Text>{" "}
                 </Flex>
                 <Stack direction="row" spacing={4}>
                   {!isSaved ? (
@@ -263,8 +258,8 @@ const PropertyDetail = () => {
         <ModalUi
           onClose={onClose}
           isOpen={isOpen}
-          title={'Oops!'}
-          message={'Please login to save properties!'}
+          title={"Oops!"}
+          message={"Please login to save properties!"}
         />
       </Box>
     </>
