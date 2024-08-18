@@ -56,7 +56,7 @@ export default function Hero() {
       <Flex
         w={"full"}
         h={"40vh"}
-        backgroundImage={"url(https://source.unsplash.com/178j8tJrNlc/1920)"}
+        backgroundImage={"url(https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=2070)"}
         backgroundSize={"cover"}
         backgroundPosition={"center center"}
         borderRadius="2xl"
